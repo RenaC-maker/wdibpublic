@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WDIB RENA FOR PUBLIC</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        #calculator-container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px M30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #fdfdfd;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 0.65em auto;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #28a745, #218838);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        #results-container {
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #1a237e;
+        }
+        .advice {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="calculator-container">
+        <h1>WDIB RENA FOR PUBLIC 🏦</h1>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="income-band">1. Income / Loan Eligibility</label>
+                <select id="income-band">
+                    <option value="1">Band 1 (0 - 199k)</option>
+                    <option value="2">Band 2 (200k - 399k)</option>
+                    <option value="3" selected>Band 3 (400k - 599k)</option>
+                    <option value="4">Band 4 (600k - 799k)</option>
+                    <option value="5">Band 5 (800k - 999k)</option>
+                    <option value="6">Band 6 (>1mil)</option>
+                    <option value="99">Band SS (>3mil)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ltv">2. Rank Results by LTV</label>
+                <select id="ltv">
+                    <option value="90">90%</option>
+                    <option value="70">70%</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="investment-goal">3. Investment Goal (Timeline)</label>
+                <select id="investment-goal" onchange="updateGoalRecommendations()">
+                    <option value="short">Short Term (1-12 months)</option>
+                    <option value="medium">Medium Term (1-3 years)</option>
+                    <option value="long">Long Term (>3 years)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="goal-recommendation">4. Specific Goal</label>
+                <select id="goal-recommendation">
+                    </select>
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="property-priority">5. What is your final property priority?</label>
+                <select id="property-priority">
+                    <option value="cash_out">💰 Cash Out (Maximize cashback)</option>
+                    <option value="cash_flow">🌊 Cash Flow (Maximize monthly income)</option>
+                    <option value="capital_gain">🚀 Capital Gain (Maximize value appreciation)</option>
+                    <option value="multiple">⚖️ Multiple (Balanced performance)</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <button onclick="calculateRecommendation()">Find My Perfect Property</button>
+            </div>
+        </div>
+
+        <div id="results-container"></div>
+    </div>
+
+    <script>
+        // --- DATA SETUP ---
+        const propertyData = [
+            { name: "VIVY", band: 1, status: "UC", cashflow90: 190, cashback90: 53000, cashflow70: 420, cashback70: 0, capitalGain: 20, multiple: 3 },
+            { name: "EVA", band: 2, status: "UC", cashflow90: -200, cashback90: 90000, cashflow70: 260, cashback70: -25000, capitalGain: 12, multiple: 2 },
+            { name: "LARA", band: 2, status: "UC", cashflow90: 350, cashback90: 108000, cashflow70: 350, cashback70: 3000, capitalGain: 20, multiple: 2 },
+            { name: "TAYLOR", band: 2, status: "UC", cashflow90: -500, cashback90: 93000, cashflow70: 1100, cashback70: 14000, capitalGain: 17, multiple: 3 },
+            { name: "TESSA", band: 2, status: "UC", cashflow90: -200, cashback90: 46000, cashflow70: 280, cashback70: -39000, capitalGain: 10, multiple: 3 },
+            { name: "FERRA", band: 3, status: "C", cashflow90: -1000, cashback90: 193000, cashflow70: -150, cashback70: 0, capitalGain: 29, multiple: 2 },
+            { name: "NEXA", band: 3, status: "UC", cashflow90: -120, cashback90: 62000, cashflow70: 400, cashback70: -62000, capitalGain: 15, multiple: 3 },
+            { name: "PINNA", band: 3, status: "C", cashflow90: -550, cashback90: 107000, cashflow70: -150, cashback70: 12000, capitalGain: 25, multiple: 2 },
+            { name: "SORA", band: 3, status: "UC", cashflow90: 700, cashback90: 32000, cashflow70: 1000, cashback70: -100000, capitalGain: 20, multiple: 3 },
+            { name: "SOYA C", band: 3, status: "UC", cashflow90: 400, cashback90: 15000, cashflow70: 1200, cashback70: -87000, capitalGain: 32, multiple: 3 },
+            { name: "UNA", band: 3, status: "UC", cashflow90: 450, cashback90: 40000, cashflow70: 800, cashback70: -70000, capitalGain: 10, multiple: 2 },
+            { name: "AURELIA", band: 3, status: "UC", cashflow90: 800, cashback90: 25000, cashflow70: 200, cashback70: -100000, capitalGain: 10, multiple: 2 },
+            { name: "DINA", band: 4, status: "C", cashflow90: -600, cashback90: 270000, cashflow70: 300, cashback70: 75000, capitalGain: 40, multiple: 2 },
+            { name: "RIRI", band: 4, status: "UC", cashflow90: 300, cashback90: 100000, cashflow70: 1000, cashback70: -90000, capitalGain: 20, multiple: 2 },
+            { name: "WEI ZIAA", band: 5, status: "C", cashflow90: 500, cashback90: 221000, cashflow70: 1000, cashback70: -35000, capitalGain: 10, multiple: 2 },
+            { name: "ABBY", band: 6, status: "C", cashflow90: 0, cashback90: 470000, cashflow70: 1400, cashback70: 200000, capitalGain: 26, multiple: 2 },
+            { name: "MAYA", band: 3, status: "Subsale", cashflow90: 800, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 50, multiple: 3 },
+            { name: "LILI", band: 3, status: "Subsale", cashflow90: 600, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 45, multiple: 3 },
+            { name: "IRIS", band: 3, status: "Subsale", cashflow90: 400, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 40, multiple: 3 },
+            { name: "NANA", band: 4, status: "Subsale", cashflow90: 0, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 35, multiple: 2 },
+            { name: "HIGO", band: 4, status: "Subsale", cashflow90: -200, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 30, multiple: 2 },
+            { name: "SASA", band: 5, status: "Subsale", cashflow90: 900, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 50, multiple: 3 },
+            { name: "KIKI", band: 5, status: "Subsale", cashflow90: 750, cashback90: 0, cashflow70: 0, cashback70: 0, capitalGain: 45, multiple: 3 }
+        ];
+
+        const goalNarrative = {
+            short: ["Settle bad debts", "Increase savings to min RM50k", "Build min RM 1mil portfolio"],
+            medium: ["Build zero to RM 1mil-3mil portfolio", "Min RM100k savings"],
+            long: ["Build a RM 5mil portfolio", "Min RM15k per month passive income"]
+        };
+
+        function updateGoalRecommendations() {
+            const goalTimeline = document.getElementById('investment-goal').value;
+            const goalRecommendationDropdown = document.getElementById('goal-recommendation');
+            goalRecommendationDropdown.innerHTML = '';
+            const options = goalNarrative[goalTimeline];
+            options.forEach(optionText => {
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.textContent = optionText;
+                goalRecommendationDropdown.appendChild(option);
+            });
+        }
+
+        function calculateRecommendation() {
+            const incomeBand = parseInt(document.getElementById('income-band').value);
+            const ltv = document.getElementById('ltv').value;
+            const priority = document.getElementById('property-priority').value;
+            const specificGoal = document.getElementById('goal-recommendation').value;
+
+            const eligibleProperties = propertyData.filter(prop => prop.band <= incomeBand);
+
+            let sortedProperties = [...eligibleProperties];
+            let sortKey = '';
+
+            switch (priority) {
+                case 'cash_out':
+                    sortKey = ltv === '90' ? 'cashback90' : 'cashback70';
+                    break;
+                case 'cash_flow':
+                    sortKey = ltv === '90' ? 'cashflow90' : 'cashflow70';
+                    break;
+                case 'capital_gain':
+                    sortKey = 'capitalGain';
+                    break;
+                case 'multiple':
+                    sortKey = 'multiple';
+                    break;
+            }
+            
+            sortedProperties.sort((a, b) => (b[sortKey] || 0) - (a[sortKey] || 0));
+
+            displayResults(sortedProperties.slice(0, 5), ltv, priority, specificGoal);
+        }
+
+        function displayResults(properties, ltv, priority, specificGoal) {
+            const resultsContainer = document.getElementById('results-container');
+            if (properties.length === 0) {
+                resultsContainer.innerHTML = '<div class="advice"><h3>No properties match your selected income band.</h3><p>Consider selecting a higher income band or adjusting your criteria.</p></div>';
+                return;
+            }
+
+            const priorityText = document.querySelector(`#property-priority option[value=${priority}]`).textContent;
+
+            let adviceHTML = `
+                <div class="advice">
+                    <h3>Your Personalized Recommendation</h3>
+                    <p>Based on your goal to "<b>${specificGoal}</b>" and your priority for <b>${priorityText}</b>, here are your top property matches, ranked by the <b>${ltv}% LTV</b> scenario.</p>
+                </div>
+            `;
+
+            let tableHTML = `
+                <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Status</th>
+                            <th>Cashflow (90%)</th>
+                            <th>Cashflow (70%)</th>
+                            <th>Cashback (90%)</th>
+                            <th>Cashback (70%)</th>
+                            <th>Capital Gain</th>
+                            <th>Band</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            properties.forEach(prop => {
+                tableHTML += `
+                    <tr>
+                        <td class="highlight">${prop.name}</td>
+                        <td>${prop.status}</td>
+                        <td>${(prop.cashflow90 || 0).toLocaleString()}</td>
+                        <td>${(prop.cashflow70 || 0).toLocaleString()}</td>
+                        <td>${(prop.cashback90 || 0).toLocaleString()}</td>
+                        <td>${(prop.cashback70 || 0).toLocaleString()}</td>
+                        <td>${prop.capitalGain !== null ? prop.capitalGain + '%' : 'N/A'}</td>
+                        <td>${prop.band}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += '</tbody></table></div>';
+            resultsContainer.innerHTML = adviceHTML + tableHTML;
+        }
+        
+        window.onload = updateGoalRecommendations;
+
+    </script>
+</body>
+</html>
