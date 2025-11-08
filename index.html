@@ -3,301 +3,731 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WDIB RENA FOR PUBLIC</title>
+    <title>Personalized Property Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f7f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
         }
-        #calculator-container {
-            background-color: #ffffff;
-            padding: 30px 40px;
+        .card {
+            background-color: white;
             border-radius: 12px;
-            box-shadow: 0 8px M30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 800px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
         }
-        h1 {
-            color: #1a237e;
-            text-align: center;
-            margin-bottom: 25px;
+        .main-title {
+            color: #a1283b; /* New Dark Red Tone */
         }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .highlight-value {
+            color: #c5a560; /* Gold accent */
+            font-weight: 700;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .full-width {
-            grid-column: 1 / -1;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            background-color: #fdfdfd;
+        /* Input Slider Styles */
+        input[type=range] {
             -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 0.65em auto;
-        }
-        button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #28a745, #218838);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: 10px;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-        #results-container {
-            margin-top: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            white-space: nowrap;
-        }
-        th {
-            background-color: #e9ecef;
-            font-weight: 600;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .highlight {
-            font-weight: bold;
-            color: #1a237e;
-        }
-        .advice {
-            background-color: #e3f2fd;
-            border-left: 5px solid #2196f3;
-            padding: 15px;
-            margin-top: 20px;
+            background: #d1d5db;
             border-radius: 5px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #a1283b; /* New Dark Red Tone */
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Timeline Styles */
+        .timeline-item {
+            position: relative;
+            padding-left: 40px;
+            padding-bottom: 16px; /* Reduced padding */
+        }
+        .timeline-item:not(:last-child) {
+             border-left: 3px solid #d1d5db;
+        }
+        .timeline-dot { position: absolute; left: -12px; top: 0; height: 22px; width: 22px; border-radius: 50%; background-color: #d1d5db; border: 4px solid #f0f2f5; transition: all 0.4s ease; }
+        .timeline-item.active .timeline-dot { background-color: #a1283b; transform: scale(1.2); } /* New Dark Red Tone */
+        .timeline-item .timeline-content {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        .timeline-item.active .timeline-content {
+            border-color: #a1283b;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .timeline-item.active .timeline-content h3 { color: #a1283b; } /* New Dark Red Tone */
+        
+        .btn-group label { border: 1px solid #d1d5db; padding: 10px 20px; cursor: pointer; transition: all 0.2s ease; font-weight: 500; }
+        .btn-group input[type="radio"]:checked + label { background-color: #a1283b; color: white; border-color: #a1283b; } /* New Dark Red Tone */
+        .btn-group input[type="radio"] { display: none; }
+
+        .grade { display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; font-weight: bold; color: white; }
+        .grade-a { background-color: #28a745; }
+        .grade-b { background-color: #ffc107; color: #333 }
+        .grade-c { background-color: #dc3545; }
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .arp-logo {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 0.25rem;
+            font-weight: 700;
+            background-color: #2563eb; /* Changed to a distinct blue */
+            color: white;
+            margin-left: 8px;
         }
     </style>
 </head>
-<body>
+<body class="p-4 sm:p-6 md:p-8">
 
-    <div id="calculator-container">
-        <h1>WDIB RENA FOR PUBLIC 🏦</h1>
-        <div class="form-grid">
-            <div class="form-group">
-                <label for="income-band">1. Income / Loan Eligibility</label>
-                <select id="income-band">
-                    <option value="1">Band 1 (0 - 199k)</option>
-                    <option value="2">Band 2 (200k - 399k)</option>
-                    <option value="3" selected>Band 3 (400k - 599k)</option>
-                    <option value="4">Band 4 (600k - 799k)</option>
-                    <option value="5">Band 5 (800k - 999k)</option>
-                    <option value="6">Band 6 (>1mil)</option>
-                    <option value="99">Band SS (>3mil)</option>
-                </select>
-            </div>
+    <div class="max-w-7xl mx-auto">
+        <!-- Section 1: Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold main-title">Your Personalized Property Roadmap</h1>
+            <p class="text-gray-600 mt-2">Aligning Your Age with Your Financial Future</p>
+        </div>
 
-            <div class="form-group">
-                <label for="ltv">2. Rank Results by LTV</label>
-                <select id="ltv">
-                    <option value="90">90%</option>
-                    <option value="70">70%</option>
-                </select>
-            </div>
+        <!-- Section 1: Age Selector Card -->
+        <div class="card mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-2 text-center">What is your current age?</h2>
+            <p class="text-center text-gray-500 mb-4">Slide to see your recommended focus area.</p>
+            <input type="range" id="ageSlider" min="25" max="65" value="30" class="w-full">
+            <p class="text-center text-2xl font-bold main-title mt-2">Current Age: <span id="ageValue">30</span></p>
+        </div>
 
-            <div class="form-group">
-                <label for="investment-goal">3. Investment Goal (Timeline)</label>
-                <select id="investment-goal" onchange="updateGoalRecommendations()">
-                    <option value="short">Short Term (1-12 months)</option>
-                    <option value="medium">Medium Term (1-3 years)</option>
-                    <option value="long">Long Term (>3 years)</option>
-                </select>
+        <!-- Section 2 & 3: Main Content Grid (Timeline & Stage) -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div class="lg:col-span-2">
+                <div class="card h-full">
+                    <h2 class="text-2xl font-bold main-title mb-6">Immediate/Medium Goal - Portfolio vs Age Timeline</h2>
+                    <div id="timeline"></div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="goal-recommendation">4. Specific Goal</label>
-                <select id="goal-recommendation">
-                    </select>
+            <div class="lg:col-span-3">
+                <div id="focusCard" class="card sticky top-8">
+                    <div class="flex items-center mb-4">
+                        <span id="focusIcon" class="text-4xl mr-4 text-white bg-red-800 p-3 rounded-lg"><i class="fas fa-rocket"></i></span>
+                        <div>
+                            <p class="text-sm text-gray-500">Your Current Focus (Age <span class="age-display">25-35</span>)</p>
+                            <h2 id="focusTitle" class="text-3xl font-bold main-title">Stage 1: Foundation Building</h2>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 flex items-center"><i class="fas fa-bullseye mr-2 text-red-800"></i>Key Milestones:</h3>
+                        <p id="focusMilestones" class="text-gray-700 text-lg mb-4 pl-8"></p>
+                        
+                        <h3 class="font-bold text-lg text-gray-800 mb-4 flex items-center"><i class="fas fa-tasks mr-2 text-red-800"></i>Primary Actions:</h3>
+                        <div id="focusActions" class="space-y-4 pl-8"></div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="form-group full-width">
-                <label for="property-priority">5. What is your final property priority?</label>
-                <select id="property-priority">
-                    <option value="cash_out">💰 Cash Out (Maximize cashback)</option>
-                    <option value="cash_flow">🌊 Cash Flow (Maximize monthly income)</option>
-                    <option value="capital_gain">🚀 Capital Gain (Maximize value appreciation)</option>
-                    <option value="multiple">⚖️ Multiple (Balanced performance)</option>
-                </select>
+        </div>
+        
+        <!-- Section 4: Long Term Vision Section -->
+        <div class="card mt-8">
+             <h2 class="text-2xl font-bold main-title mb-4 text-center">Long-Term Vision: The "Sell 1, Free 3" Strategy</h2>
+             <p class="text-center text-gray-600 mb-6">Select a portfolio target to see the required property plan.</p>
+             <div id="portfolioSelector" class="flex flex-wrap justify-center gap-2 btn-group rounded-lg overflow-hidden mb-8">
+                <input type="radio" id="target1m" name="portfolioGoal" value="1"><label for="target1m" class="rounded-lg">RM 1M</label>
+                <input type="radio" id="target2m" name="portfolioGoal" value="2"><label for="target2m" class="rounded-lg">RM 2M</label>
+                <input type="radio" id="target3m" name="portfolioGoal" value="3" checked><label for="target3m" class="rounded-lg">RM 3M</label>
+                <input type="radio" id="target4m" name="portfolioGoal" value="4"><label for="target4m" class="rounded-lg">RM 4M</label>
+                <input type="radio" id="target5m" name="portfolioGoal" value="5"><label for="target5m" class="rounded-lg">RM 5M</label>
+                <input type="radio" id="target6m" name="portfolioGoal" value="6"><label for="target6m" class="rounded-lg">RM 6M</label>
+                <input type="radio" id="target10m" name="portfolioGoal" value="10"><label for="target10m" class="rounded-lg">RM 10M+</label>
             </div>
-
-            <div class="form-group full-width">
-                <button onclick="calculateRecommendation()">Find My Perfect Property</button>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-gray-50 p-4 rounded-lg"><p class="text-gray-600">Units to Buy (~RM500k)</p><p id="unitsToBuy" class="text-4xl highlight-value">6</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><p class="text-gray-600">Units to Sell (Yr 20)</p><p id="unitsToSell" class="text-4xl highlight-value">2</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><p class="text-gray-600">Units Fully Owned</p><p id="unitsOwned" class="text-4xl highlight-value">4</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><p class="text-gray-600">Est. Passive Income</p><p id="passiveIncome" class="text-4xl highlight-value">~RM 20k</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><p class="text-gray-600">Total Property Value (Yr 20)</p><p id="propertyValue" class="text-4xl highlight-value">~RM 6M</p></div>
+                <div class="bg-gray-50 p-4 rounded-lg"><p class="text-gray-600">Net Worth (Yr 20)</p><p id="netWorth" class="text-4xl highlight-value">~RM 4.5M</p></div>
             </div>
         </div>
 
-        <div id="results-container"></div>
+        <!-- Section 5: Consultant Recommender -->
+        <div class="card mt-8">
+            <h2 class="text-2xl font-bold main-title mb-2 text-center">Consultant Recommender</h2>
+            <p class="text-center text-gray-600 mb-6">Get tailored property recommendations based on nationality and financial profile.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 items-start">
+                <!-- Inputs -->
+                <div>
+                    <label class="font-bold text-gray-700 mb-2 block">Client Nationality</label>
+                    <div id="nationalitySelector" class="flex justify-start btn-group rounded-lg overflow-hidden">
+                        <input type="radio" id="natMalaysian" name="nationality" value="malaysian" checked><label for="natMalaysian" class="rounded-l-lg">Malaysian</label>
+                        <input type="radio" id="natSingaporean" name="nationality" value="singaporean"><label for="natSingaporean">Singaporean</label>
+                        <input type="radio" id="natOthers" name="nationality" value="others"><label for="natOthers" class="rounded-r-lg">Others</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="consultantLoanEligibilitySlider" class="font-bold text-gray-700">Client's Max Loan Eligibility (RM)</label>
+                    <input type="range" id="consultantLoanEligibilitySlider" min="400000" max="5000000" value="1000000" step="50000" class="w-full mt-2">
+                    <p class="text-center text-xl font-bold main-title mt-1">RM <span id="consultantLoanEligibilityValue">1,000,000</span></p>
+                </div>
+                <div id="consultantLtvWrapper" class="md:col-span-2 text-center">
+                     <label class="font-bold text-gray-700 mb-2 block">Investment Strategy (LTV)</label>
+                    <div id="consultantLtvSelector" class="flex justify-center btn-group rounded-lg overflow-hidden">
+                        <input type="radio" id="consultantLtv90" name="consultantLtv" value="90"><label for="consultantLtv90" class="rounded-l-lg">90% LTV (Cashback)</label>
+                        <input type="radio" id="consultantLtv70" name="consultantLtv" value="70" checked><label for="consultantLtv70" class="rounded-r-lg">70% LTV (Cashflow)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendation Output -->
+            <div id="consultantRecommendationResult" class="mt-6 pt-6 border-t"></div>
+            
+            <!-- Pairing Idea Spotlight -->
+            <div id="pairingSpotlight" class="hidden mt-6 pt-6 border-t border-dashed">
+                <h3 class="text-xl font-bold text-gray-800 text-center mb-4">What is a Pairing Strategy? (Example)</h3>
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <h4 class="font-bold text-lg main-title">BUY 1 FREE 1 PROPERTY</h4>
+                            <p class="font-semibold text-gray-700">Pairing WEI ZIAA + SOYA A</p>
+                            <p class="mt-2 text-sm text-gray-600">This strategy uses the cashback from a high-cashback property (like WEI ZIAA) to cover the entry costs of a high-cashflow property (like SOYA A), effectively getting you the second property for "free".</p>
+                        </div>
+                        <div class="border-l pl-6">
+                             <h4 class="font-bold text-lg main-title">Buy SOYA A @ LTV70 For Free</h4>
+                             <p class="text-sm text-gray-600">Using WEI ZIAA Cashback</p>
+                             <ul class="text-sm space-y-1 mt-2">
+                                 <li><span class="font-semibold">Renovation Cost:</span> ~RM40,000</li>
+                             </ul>
+                             <p class="text-sm font-bold text-green-600 mt-2">+ Cashflow Positive ~RM800++</p>
+                        </div>
+                    </div>
+                    <p class="text-center mt-6 font-semibold text-gray-700">🎯 Talk to your SM for more pairing recommendation strategy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Property Opportunity Finder -->
+        <div class="card mt-8">
+            <h2 class="text-2xl font-bold main-title mb-2 text-center">Property Opportunity Finder</h2>
+            <p class="text-center text-gray-600 mb-6">Find suitable properties based on your loan eligibility and preferred strategy.</p>
+            
+            <!-- New Mortgage Scenario Inputs -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-gray-50 p-4 rounded-lg mb-6">
+                <div>
+                    <label for="clientAge" class="block text-sm font-medium text-gray-700">Client Age</label>
+                    <input type="number" id="clientAge" value="30" min="18" max="70" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-a1283b focus:ring-a1283b sm:text-sm p-2 border">
+                </div>
+                <div>
+                    <label for="interestRate" class="block text-sm font-medium text-gray-700">Interest Rate (%)</label>
+                    <input type="number" id="interestRate" value="3.7" step="0.1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-a1283b focus:ring-a1283b sm:text-sm p-2 border">
+                </div>
+                <div>
+                    <label for="loanTenure" class="block text-sm font-medium text-gray-700">Loan Tenure (Years)</label>
+                    <input type="number" id="loanTenure" value="35" min="5" max="35" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-a1283b focus:ring-a1283b sm:text-sm p-2 border">
+                    <p id="maxTenureMsg" class="text-xs text-red-600 mt-1 hidden">Max tenure capped by age.</p>
+                </div>
+                <div class="text-center">
+                    <label class="font-bold text-gray-700 mb-2 block">Margin of Finance (LTV)</label>
+                    <div id="ltvSelectorFinder" class="flex justify-center btn-group rounded-lg overflow-hidden">
+                        <input type="radio" id="finderLtv90" name="finderLtv" value="90" checked><label for="finderLtv90" class="rounded-l-lg">90%</label>
+                        <input type="radio" id="finderLtv70" name="finderLtv" value="70"><label for="finderLtv70" class="rounded-r-lg">70%</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Eligibility Filter -->
+            <div class="grid grid-cols-1 gap-8 items-center mb-6">
+                <div>
+                     <label for="loanEligibilityInput" class="font-bold text-gray-700">Filter by Your Max Loan Eligibility (RM)</label>
+                     <input type="number" id="loanEligibilityInput" value="500000" step="1000" class="mt-1 block w-full md:w-1/3 rounded-md border-gray-300 shadow-sm focus:border-a1283b focus:ring-a1283b sm:text-lg font-bold p-2 border">
+                </div>
+            </div>
+            
+            <div class="mt-8"><h3 class="text-xl font-bold text-gray-800 mb-4">Recommended Properties:</h3><div id="propertyRecommendations" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
+        </div>
+        
+        <!-- ARP Calculator and Description Section -->
+        <div class="card mt-8">
+            <h2 class="text-2xl font-bold main-title mb-6 text-center">Automated Rental Programme (ARP) Calculator</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- ARP Calculator -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-semibold text-lg text-gray-800 mb-4 text-center">ARP Income Projection</h3>
+                    <div>
+                        <label for="arpProjectSelect" class="block text-sm font-medium text-gray-700">Select a Project</label>
+                        <select id="arpProjectSelect" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                           <option value="" disabled selected>Select a Project</option>
+                        </select>
+                    </div>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex justify-between items-center bg-white p-3 rounded-md">
+                            <span id="arpM40Label" class="font-semibold text-gray-600">M40 Package (3% Yield):</span>
+                            <span id="arpM40" class="font-bold text-lg text-green-600">RM 0/m</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-3 rounded-md">
+                            <span id="arpT20Label" class="font-semibold text-gray-600">T20 Package (4% Yield):</span>
+                            <span id="arpT20" class="font-bold text-lg text-green-600">RM 0/m</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-3 rounded-md">
+                            <span id="arpT1Label" class="font-semibold text-gray-600">T1 Package (6% Yield):</span>
+                            <span id="arpT1" class="font-bold text-lg text-green-600">RM 0/m</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-gray-500 italic">
+                        <p>• Projection is based on average price of available units.</p>
+                        <p>• All units will come with different SPA & Net Price.</p>
+                        <p>• Refer the excel calculator uploaded in LMS to get the actual SPA & Net price for your unit.</p>
+                    </div>
+                </div>
+                <!-- ARP Description -->
+                <div class="text-gray-700">
+                    <h3 class="font-semibold text-lg text-gray-800 mb-2">About the ARP</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Minimum <span class="font-bold">2 years tenancy</span> subject to option to renew for another 4 years (subject to T&C).</li>
+                        <li>Subject to fulfilling ARP renovation specification and agreeing to other T&C.</li>
+                        <li>Maximum <span class="font-bold">30 units per development</span> (1st come 1st serve basis).</li>
+                    </ul>
+                     <div class="mt-4 pt-4 border-t">
+                        <h4 class="font-semibold text-lg text-gray-800 mb-2">Type of Package</h4>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><strong>Premium Client = T1</strong> @ <strong>6% yields ARP</strong></li>
+                            <li><strong>Lite Client = T20</strong> @ <strong>4% yields ARP</strong></li>
+                        </ul>
+                        <p class="text-xs italic text-gray-500 mt-2">(Check with your SM if you do not know your package)</p>
+                     </div>
+                     <p class="text-xs italic text-gray-500 mt-4">*All ARP is based on nett purchase price.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NEW FIRE 2025 Upgrade Section -->
+        <div class="card mt-8 bg-gray-900 text-white">
+            <div class="bg-red-600 text-white font-bold px-4 py-2 inline-block mb-6 transform -skew-x-12 ml-[-1rem] shadow-lg">
+                <span class="block transform skew-x-12 uppercase tracking-wider">FIRE 2025: Lifetime Upgrade</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <!-- Highlights (Left - 2 cols) -->
+                <div class="md:col-span-2 flex flex-col justify-center space-y-6 text-center">
+                     <h3 class="text-3xl font-extrabold text-yellow-400 tracking-widest uppercase">HIGHLIGHTS</h3>
+                     <div class="border-2 border-yellow-400 rounded-2xl p-4 bg-gray-800 bg-opacity-50">
+                         <p class="text-2xl font-bold text-yellow-400">RM1.00 BOOKING FEE</p>
+                     </div>
+                     <div class="border-2 border-red-600 rounded-2xl p-4 bg-gray-800 bg-opacity-50">
+                         <p class="text-sm text-gray-300 uppercase tracking-wider mb-1">Grand Prize Worth of</p>
+                         <p class="text-3xl font-extrabold text-white">RM1,000,000</p>
+                     </div>
+                </div>
+                <!-- Details (Right - 3 cols) -->
+                <div class="md:col-span-3 border-2 border-red-600 rounded-3xl p-6 bg-gray-800 bg-opacity-30">
+                    <h4 class="text-2xl font-bold text-yellow-400 mb-4">No payment upfront to upgrade to T1</h4>
+                    <ul class="space-y-3 text-gray-200 text-lg">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-red-500 mt-1 mr-3 flex-shrink-0"></i><span>Min 6% ARP</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-red-500 mt-1 mr-3 flex-shrink-0"></i><span>Lifetime</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-red-500 mt-1 mr-3 flex-shrink-0"></i><span>Hustle income unlimited</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-red-500 mt-1 mr-3 flex-shrink-0"></i><span>Bring more people to join you and profit from every purchase for 5 years</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-red-500 mt-1 mr-3 flex-shrink-0"></i><span>Major discount on upgrade for anyone who purchase property in the next 60 days</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disclaimer Section -->
+        <div class="mt-8 text-center">
+            <p class="text-xs italic text-gray-500">
+                Disclaimer: Images, illustrations,details, features, figures and/or calculations above are provided by and/or derived from Developer’s representations and/or publicly representation or guarantee by FAR Capital Sdn Bhd the Developer, external factors or may not be applicable to the client’s profile. The above shall not constitute as a representation or guarantee by FAR Capital Sdn Bhd.
+            </p>
+        </div>
     </div>
 
     <script>
-        // --- DATA SETUP ---
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- DATA ---
+        const ageStages = [
+            { range: [25, 35], displayText: '25-35', stage: 1, title: 'Stage 1: Foundation Building', icon: 'fa-rocket', milestones: 'Min <span class="highlight-value">1 mil</span> portfolio / Min <span class="highlight-value">RM50k</span> savings', actions: [ {icon: 'fa-wallet', title: 'Consolidate bad debts', desc: 'car, credit card, personal loan'}, {icon: 'fa-building-columns', title: 'Purchase first investment properties', desc: 'Start building your asset base.'}, {icon: 'fa-piggy-bank', title: 'Increase emergency savings', desc: 'Aim for 6-12 months of expenses.'} ] },
+            { range: [36, 45], displayText: '35-45', stage: 2, title: 'Stage 2: Expansion and Family', icon: 'fa-chart-line', milestones: 'Min <span class="highlight-value">3 mil</span> portfolio / Min <span class="highlight-value">RM100k</span> savings', actions: [ {icon: 'fa-graduation-cap', title: 'Plan for children\'s education', desc: 'Secure future funding.'}, {icon: 'fa-magnifying-glass-dollar', title: 'Strategize for cash-out opportunities', desc: 'Leverage equity for growth.'}, {icon: 'fa-scale-balanced', title: 'Balance cashout, capital gain & cashflow', desc: 'Optimize portfolio performance.'} ] },
+            { range: [46, 55], displayText: '45-55', stage: 3, title: 'Stage 3: Wealth Consolidation', icon: 'fa-shield-halved', milestones: 'Min <span class="highlight-value">6 mil</span> portfolio / passive income <span class="highlight-value">RM15k</span>', actions: [ {icon: 'fa-hand-holding-dollar', title: 'Focus on rental yield', desc: 'Maximize passive income streams.'}, {icon: 'fa-umbrella-beach', title: 'Retirement planning', desc: 'Solidify your exit strategy.'} ] },
+            { range: [56, 65], displayText: '55-65', stage: 4, title: 'Stage 4: Financial Freedom', icon: 'fa-trophy', milestones: 'Secure retirement fund / defensive assets / legacy planning', actions: [ {icon: 'fa-chess-rook', title: 'Shift to defensive assets', desc: 'Preserve capital and reduce risk.'}, {icon: 'fa-file-invoice-dollar', title: 'Implement legacy and estate planning', desc: 'Secure your family\'s future.'} ] }
+        ];
+        
+        const portfolioTargets = { 
+            1: { unitsToBuy: 2, unitsToSell: 1, unitsOwned: 1, income: '~RM 5k', propertyValue: '~RM 2M', netWorth: '~RM 1.5M' },
+            2: { unitsToBuy: 4, unitsToSell: 1, unitsOwned: 3, income: '~RM 15k', propertyValue: '~RM 4M', netWorth: '~RM 3M' },
+            3: { unitsToBuy: 6, unitsToSell: 2, unitsOwned: 4, income: '~RM 20k', propertyValue: '~RM 6M', netWorth: '~RM 4.5M' },
+            4: { unitsToBuy: 8, unitsToSell: 2, unitsOwned: 6, income: '~RM 30k', propertyValue: '~RM 8M', netWorth: '~RM 6M' },
+            5: { unitsToBuy: 10, unitsToSell: 3, unitsOwned: 7, income: '~RM 35k', propertyValue: '~RM 10M', netWorth: '~RM 7.5M' },
+            6: { unitsToBuy: 12, unitsToSell: 3, unitsOwned: 9, income: '~RM 45k', propertyValue: '~RM 12M', netWorth: '~RM 9M' },
+            10: { unitsToBuy: 20, unitsToSell: 5, unitsOwned: 15, income: '~RM 75k', propertyValue: '~RM 20M', netWorth: '~RM 15M' } 
+        };
+        
         const propertyData = [
-            { name: "VIVY", band: 1, status: "UC", cashflow90: 190, cashback90: 53000, cashflow70: 420, cashback70: 0, capitalGain: 20, multiple: 3 },
-            { name: "EVA", band: 2, status: "UC", cashflow90: -200, cashback90: 90000, cashflow70: 260, cashback70: -25000, capitalGain: 12, multiple: 2 },
-            { name: "LARA", band: 2, status: "UC", cashflow90: 350, cashback90: 108000, cashflow70: 350, cashback70: 3000, capitalGain: 20, multiple: 2 },
-            { name: "TAYLOR", band: 2, status: "UC", cashflow90: -500, cashback90: 93000, cashflow70: 1100, cashback70: 14000, capitalGain: 17, multiple: 3 },
-            { name: "TESSA", band: 2, status: "UC", cashflow90: -200, cashback90: 46000, cashflow70: 280, cashback70: -39000, capitalGain: 10, multiple: 3 },
-            { name: "FERRA", band: 3, status: "C", cashflow90: -1000, cashback90: 193000, cashflow70: -150, cashback70: 0, capitalGain: 29, multiple: 2 },
-            { name: "NEXA", band: 3, status: "UC", cashflow90: -120, cashback90: 62000, cashflow70: 400, cashback70: -62000, capitalGain: 15, multiple: 3 },
-            { name: "PINNA", band: 3, status: "C", cashflow90: -550, cashback90: 107000, cashflow70: -150, cashback70: 12000, capitalGain: 25, multiple: 2 },
-            { name: "SORA", band: 3, status: "UC", cashflow90: 700, cashback90: 32000, cashflow70: 1000, cashback70: -100000, capitalGain: 20, multiple: 3 },
-            { name: "SOYA C", band: 3, status: "UC", cashflow90: 400, cashback90: 15000, cashflow70: 1200, cashback70: -87000, capitalGain: 32, multiple: 3 },
-            { name: "UNA", band: 3, status: "UC", cashflow90: 450, cashback90: 40000, cashflow70: 800, cashback70: -70000, capitalGain: 10, multiple: 2 },
-            { name: "AURELIA", band: 3, status: "UC", cashflow90: 800, cashback90: 25000, cashflow70: 200, cashback70: -100000, capitalGain: 10, multiple: 2 },
-            { name: "DINA", band: 4, status: "C", cashflow90: -600, cashback90: 270000, cashflow70: 300, cashback70: 75000, capitalGain: 40, multiple: 2 },
-            { name: "RIRI", band: 4, status: "UC", cashflow90: 300, cashback90: 100000, cashflow70: 1000, cashback70: -90000, capitalGain: 20, multiple: 2 },
-            { name: "WEI ZIAA", band: 5, status: "C", cashflow90: 500, cashback90: 221000, cashflow70: 1000, cashback70: -35000, capitalGain: 10, multiple: 2 },
-            { name: "ABBY", band: 6, status: "C", cashflow90: 0, cashback90: 470000, cashflow70: 1400, cashback70: 200000, capitalGain: 26, multiple: 2 },
-          
+            { name: 'EVA', loanRange: [200000, 400000], cashflow90: -200, cashflow70: 260, cashback90: 90000, cashback70: -25000, capitalGain: 12, gradeCapital: 'B', gradeCashflow: 'A', status: 'UC', arp: true, nettPrice: 460000, arpType: 'percentage' },
+            { name: 'LARA', loanRange: [200000, 400000], cashflow90: 350, cashflow70: 350, cashback90: 108000, cashback70: 3000, capitalGain: 20, gradeCapital: 'B', gradeCashflow: 'B', status: 'UC', arp: true, nettPrice: 490000, arpType: 'percentage' },
+            { name: 'TAYLOR', loanRange: [200000, 400000], cashflow90: -500, cashflow70: 1100, cashback90: 93000, cashback70: 14000, capitalGain: 17, gradeCapital: 'A', gradeCashflow: 'B', status: 'UC', arp: true, nettPrice: 265000, arpType: 'percentage' },
+            { name: 'TESSA', loanRange: [200000, 400000], cashflow90: -200, cashflow70: 280, cashback90: 46000, cashback70: -39000, capitalGain: 10, gradeCapital: 'B', gradeCashflow: 'B', status: 'UC', arp: true, nettPrice: 350000, arpType: 'percentage' },
+            { name: 'FERRA', loanRange: [400000, 600000], cashflow90: 500, cashflow70: 200, cashback90: 193000, cashback70: 0, capitalGain: 29, gradeCapital: 'A', gradeCashflow: 'C', status: 'Completed', arp: true, nettPrice: 680000, arpType: 'fixed', fixedRental: 3500 },
+            { name: 'NEXA', loanRange: [400000, 600000], cashflow90: -120, cashflow70: 400, cashback90: 62000, cashback70: -62000, capitalGain: 15, gradeCapital: 'B', gradeCashflow: 'B', status: 'UC', url: 'https://farcapital.zendesk.com/hc/en-us/sections/47180028617625-NEW-Project-NEXA-Cheras', arp: true, nettPrice: 500000, arpType: 'percentage' },
+            { name: 'PINNA', loanRange: [400000, 600000], cashflow90: -550, cashflow70: -150, cashback90: 107000, cashback70: 12000, capitalGain: 25, gradeCapital: 'B', gradeCashflow: 'B', status: 'Completed', arp: false, nettPrice: null },
+            { name: 'SORA', loanRange: [400000, 600000], cashflow90: 700, cashflow70: 1000, cashback90: 32000, cashback70: -100000, capitalGain: 20, gradeCapital: 'A', gradeCashflow: 'A', status: 'UC', arp: true, nettPrice: 580000, arpType: 'percentage' },
+            { name: 'SOYA A', loanRange: [400000, 600000], cashflow90: 400, cashflow70: 1200, cashback90: 140000, cashback70: 0, capitalGain: 32, gradeCapital: 'A', gradeCashflow: 'A', status: 'UC', arp: true, nettPrice: 488000, arpType: 'percentage' },
+            { name: 'UNA', loanRange: [400000, 600000], cashflow90: 450, cashflow70: 800, cashback90: 40000, cashback70: -70000, capitalGain: 10, gradeCapital: 'A', gradeCashflow: 'A', status: 'UC', arp: true, nettPrice: 465000, arpType: 'percentage' },
+            { name: 'AURELIA', loanRange: [400000, 600000], cashflow90: 800, cashflow70: 200, cashback90: 25000, cashback70: -100000, capitalGain: 10, gradeCapital: 'A', gradeCashflow: 'B', status: 'UC', arp: false, nettPrice: null },
+            { name: 'ESTEE', loanRange: [600000, 800000], cashflow90: -1200, cashflow70: -300, cashback90: 375000, cashback70: 154000, capitalGain: 10, gradeCapital: 'B', gradeCashflow: 'C', status: 'Completed', arp: true, nettPrice: 618000, arpType: 'percentage' },
+            { name: 'DINA', loanRange: [600000, 800000], cashflow90: -600, cashflow70: 300, cashback90: 270000, cashback70: 75000, capitalGain: 40, gradeCapital: 'B', gradeCashflow: 'B', status: 'Completed', arp: false, nettPrice: null },
+            { name: 'RIRI', loanRange: [600000, 800000], cashflow90: 300, cashflow70: 1000, cashback90: 100000, cashback70: -90000, capitalGain: 20, gradeCapital: 'A', gradeCashflow: 'A', status: 'UC', arp: true, nettPrice: 780000, arpType: 'percentage' },
+            { name: 'WEIZIA', loanRange: [800000, 1000000], cashflow90: -500, cashflow70: 700, cashback90: 221000, cashback70: -35000, capitalGain: 10, gradeCapital: 'A', gradeCashflow: 'B', status: 'Completed', arp: true, nettPrice: 950000, arpType: 'fixed', fixedRental: 5000 },
+            { name: 'ABBY', loanRange: [1200000, 5000000], cashflow90: 0, cashflow70: 1400, cashback90: 470000, cashback70: 200000, capitalGain: 26, gradeCapital: 'A', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 1250000, arpType: 'percentage' },
+            { name: 'ANA', loanRange: [200000, 400000], cashflow90: 230, cashflow70: 200, cashback90: 121000, cashback70: 15000, capitalGain: 20, gradeCapital: 'A', gradeCashflow: 'B', status: 'Completed', arp: true, nettPrice: 380000, arpType: 'fixed', fixedRental: 1800 },
+            { name: 'YUNA', loanRange: [200000, 400000], cashflow90: 200, cashflow70: 500, cashback90: 85000, cashback70: -20000, capitalGain: 24, gradeCapital: 'B', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 480000, arpType: 'percentage' },
+            { name: 'KAYLEE', loanRange: [200000, 400000], cashflow90: 400, cashflow70: 700, cashback90: 80000, cashback70: 14000, capitalGain: 10, gradeCapital: 'B', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 240000, arpType: 'percentage' },
+            { name: 'VIANA', loanRange: [800000, 1000000], cashflow90: 2000, cashflow70: 1200, cashback90: 300000, cashback70: -10000, capitalGain: 30, gradeCapital: 'B', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 970000, arpType: 'percentage' },
+            { name: 'DIMM', loanRange: [800000, 1000000], cashflow90: 350, cashflow70: 1500, cashback90: 210000, cashback70: -70000, capitalGain: 25, gradeCapital: 'B', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 1050638, arpType: 'percentage' }
         ];
 
-        const goalNarrative = {
-            short: ["Settle bad debts", "Increase savings to min RM50k", "Build min RM 1mil portfolio"],
-            medium: ["Build zero to RM 1mil-3mil portfolio", "Min RM100k savings"],
-            long: ["Build a RM 5mil portfolio", "Min RM15k per month passive income"]
-        };
+        // --- DOM ELEMENTS ---
+        const ageSlider = document.getElementById('ageSlider');
+        const ageValue = document.getElementById('ageValue');
+        const timelineContainer = document.getElementById('timeline');
+        const focusCard = { icon: document.getElementById('focusIcon'), title: document.getElementById('focusTitle'), milestones: document.getElementById('focusMilestones'), actions: document.getElementById('focusActions'), ageDisplays: document.querySelectorAll('.age-display') };
+        const portfolioSelector = document.getElementById('portfolioSelector');
+        const visionCard = { unitsToBuy: document.getElementById('unitsToBuy'), unitsToSell: document.getElementById('unitsToSell'), unitsOwned: document.getElementById('unitsOwned'), passiveIncome: document.getElementById('passiveIncome'), propertyValue: document.getElementById('propertyValue'), netWorth: document.getElementById('netWorth') };
+        const loanEligibilityInput = document.getElementById('loanEligibilityInput');
+        const ltvSelector = document.getElementById('ltvSelector');
+        const recommendationsContainer = document.getElementById('propertyRecommendations');
+        
+        // New Mortgage Calculator Inputs
+        const clientAgeInput = document.getElementById('clientAge');
+        const interestRateInput = document.getElementById('interestRate');
+        const loanTenureInput = document.getElementById('loanTenure');
+        const maxTenureMsg = document.getElementById('maxTenureMsg');
 
-        function updateGoalRecommendations() {
-            const goalTimeline = document.getElementById('investment-goal').value;
-            const goalRecommendationDropdown = document.getElementById('goal-recommendation');
-            goalRecommendationDropdown.innerHTML = '';
-            const options = goalNarrative[goalTimeline];
-            options.forEach(optionText => {
-                const option = document.createElement('option');
-                option.value = optionText;
-                option.textContent = optionText;
-                goalRecommendationDropdown.appendChild(option);
+        // Consultant Recommender Elements
+        const nationalitySelector = document.getElementById('nationalitySelector');
+        const consultantLoanEligibilitySlider = document.getElementById('consultantLoanEligibilitySlider');
+        const consultantLoanEligibilityValue = document.getElementById('consultantLoanEligibilityValue');
+        const consultantLtvWrapper = document.getElementById('consultantLtvWrapper');
+        const consultantLtvSelector = document.getElementById('consultantLtvSelector');
+        const consultantRecommendationResult = document.getElementById('consultantRecommendationResult');
+        const pairingSpotlight = document.getElementById('pairingSpotlight');
+        
+        // ARP Calculator Elements
+        const arpProjectSelect = document.getElementById('arpProjectSelect');
+        const arpM40Display = document.getElementById('arpM40');
+        const arpT20Display = document.getElementById('arpT20');
+        const arpT1Display = document.getElementById('arpT1');
+        const arpM40Label = document.getElementById('arpM40Label');
+        const arpT20Label = document.getElementById('arpT20Label');
+        const arpT1Label = document.getElementById('arpT1Label');
+
+
+        // --- FUNCTIONS ---
+        function createTimeline() { 
+            timelineContainer.innerHTML = ''; 
+            ageStages.forEach(stage => { 
+                const item = document.createElement('div'); 
+                item.className = 'timeline-item'; 
+                item.id = `stage-${stage.stage}`; 
+                item.innerHTML = `<div class="timeline-dot"></div><div class="timeline-content"><p class="text-sm text-gray-500">${stage.displayText} years old</p><h3 class="font-bold text-lg text-gray-700 transition-colors">${stage.title}</h3></div>`; 
+                timelineContainer.appendChild(item); 
+            }); 
+        }
+        
+        function updateFocusArea(age) { 
+            const currentStageData = ageStages.find(s => age >= s.range[0] && age <= s.range[1]) || ageStages[0]; 
+            document.querySelectorAll('.timeline-item').forEach(item => item.classList.remove('active')); 
+            document.getElementById(`stage-${currentStageData.stage}`).classList.add('active'); 
+            focusCard.icon.innerHTML = `<i class="fas ${currentStageData.icon}"></i>`; 
+            focusCard.title.textContent = currentStageData.title; 
+            focusCard.milestones.innerHTML = currentStageData.milestones; 
+            focusCard.actions.innerHTML = currentStageData.actions.map(action => `<div class="flex items-start"><i class="fas ${action.icon} text-red-800 mt-1 mr-4 w-5 text-center"></i><div><h4 class="font-semibold text-gray-800">${action.title}</h4><p class="text-sm text-gray-600">${action.desc}</p></div></div>`).join(''); 
+            focusCard.ageDisplays.forEach(el => el.textContent = `${currentStageData.displayText}`); 
+        }
+        
+        function updateVision() { 
+            const selectedValue = document.querySelector('input[name="portfolioGoal"]:checked').value; 
+            const data = portfolioTargets[selectedValue]; 
+            if(!data) return; 
+            visionCard.unitsToBuy.textContent = data.unitsToBuy; 
+            visionCard.unitsToSell.textContent = data.unitsToSell; 
+            visionCard.unitsOwned.textContent = data.unitsOwned; 
+            visionCard.passiveIncome.textContent = data.income;
+            visionCard.propertyValue.textContent = data.propertyValue;
+            visionCard.netWorth.textContent = data.netWorth;
+        }
+        function formatCurrency(num) { return new Intl.NumberFormat('en-MY', { style: 'currency', currency: 'MYR', minimumFractionDigits: 0 }).format(num); }
+
+        function calculateMonthlyInstallment(loanAmount, annualRate, tenureYears) {
+            if (loanAmount <= 0) return 0;
+            const monthlyRate = (annualRate / 100) / 12;
+            const numberOfPayments = tenureYears * 12;
+            
+            if (monthlyRate === 0) return loanAmount / numberOfPayments;
+
+            return loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+        }
+        
+        function updateMaxTenure() {
+            const age = parseInt(clientAgeInput.value) || 30;
+            const maxTenureByAge = 70 - age;
+            const absoluteMaxTenure = 35;
+            const calculatedMaxTenure = Math.max(0, Math.min(absoluteMaxTenure, maxTenureByAge));
+            
+            loanTenureInput.max = calculatedMaxTenure;
+            
+            if (parseInt(loanTenureInput.value) > calculatedMaxTenure) {
+                loanTenureInput.value = calculatedMaxTenure;
+                maxTenureMsg.classList.remove('hidden');
+                setTimeout(() => maxTenureMsg.classList.add('hidden'), 3000);
+            }
+        }
+
+        function recommendProperties() {
+            updateMaxTenure();
+            const maxLoanFilter = parseInt(loanEligibilityInput.value) || 0;
+            const ltvType = document.querySelector('input[name="finderLtv"]:checked').value;
+            const ltv = ltvType === '90' ? 0.9 : 0.7;
+            
+            const interestRate = parseFloat(interestRateInput.value) || 3.7;
+            const loanTenure = parseInt(loanTenureInput.value) || 35;
+
+            const filteredProperties = propertyData.filter(prop => prop.loanRange[0] <= maxLoanFilter);
+            recommendationsContainer.innerHTML = '';
+            
+            if (filteredProperties.length === 0) {
+                 recommendationsContainer.innerHTML = `<p class="text-gray-500 col-span-full text-center py-8">No properties match your current loan eligibility. Try increasing the amount.</p>`;
+                 return;
+            }
+            
+            filteredProperties.forEach(prop => {
+                const card = document.createElement('div'); card.className = 'bg-gray-50 p-4 rounded-lg border border-gray-200 flex flex-col';
+                
+                const cashflow = ltv === 0.9 ? prop.cashflow90 : prop.cashflow70; 
+                const cashback = ltv === 0.9 ? prop.cashback90 : prop.cashback70; 
+                const cashflowColor = cashflow >= 0 ? 'text-green-600' : 'text-red-600';
+                
+                const price = prop.nettPrice || prop.loanRange[1];
+                const loanAmount = price * ltv;
+                const monthlyInstallment = calculateMonthlyInstallment(loanAmount, interestRate, loanTenure);
+
+                const statusBadge = prop.status === 'Completed' 
+                    ? `<span class="status-badge bg-green-100 text-green-800">Completed</span>`
+                    : `<span class="status-badge bg-blue-100 text-blue-800">UC</span>`;
+                
+                const arpLogo = prop.arp ? `<span class="arp-logo">ARP</span>` : '';
+
+                let propertyTitleHTML = `<div class="flex justify-between items-center mb-2"><div class="flex items-center"><h4 class="font-bold text-xl main-title truncate mr-2">${prop.name}</h4>${arpLogo}</div>${statusBadge}</div>`;
+                if (prop.url) {
+                    propertyTitleHTML = `<a href="${prop.url}" target="_blank" class="hover:opacity-75 transition-opacity">${propertyTitleHTML}</a>`;
+                }
+
+                card.innerHTML = `
+                    ${propertyTitleHTML}
+                    <p class="text-sm text-gray-500 mb-4">Price Range: ${formatCurrency(prop.loanRange[0])} - ${formatCurrency(prop.loanRange[1])}</p>
+                    <div class="space-y-3 text-md flex-grow">
+                        <div class="flex justify-between"><span class="font-semibold">Est. Installment:</span><span class="font-bold text-gray-800">${formatCurrency(monthlyInstallment)}/m</span></div>
+                        <div class="flex justify-between"><span class="font-semibold">Est. Net Cashflow:</span><span class="font-bold ${cashflowColor}">${formatCurrency(cashflow)}/m</span></div>
+                        <div class="flex justify-between"><span class="font-semibold">Cashback:</span><span class="font-bold text-blue-600">${formatCurrency(cashback)}</span></div>
+                    </div>`;
+                recommendationsContainer.appendChild(card);
             });
         }
 
-        function calculateRecommendation() {
-            const incomeBand = parseInt(document.getElementById('income-band').value);
-            const ltv = document.getElementById('ltv').value;
-            const priority = document.getElementById('property-priority').value;
-            const specificGoal = document.getElementById('goal-recommendation').value;
+        function consultantRecommend() {
+            const nationality = document.querySelector('input[name="nationality"]:checked').value;
+            const loanEligibility = parseInt(consultantLoanEligibilitySlider.value);
+            let recommendation = { text: "No specific recommendation for this criteria.", special: false, properties: [] };
 
-            const eligibleProperties = propertyData.filter(prop => prop.band <= incomeBand);
-
-            let sortedProperties = [...eligibleProperties];
-            let sortKey = '';
-
-            switch (priority) {
-                case 'cash_out':
-                    sortKey = ltv === '90' ? 'cashback90' : 'cashback70';
-                    break;
-                case 'cash_flow':
-                    sortKey = ltv === '90' ? 'cashflow90' : 'cashflow70';
-                    break;
-                case 'capital_gain':
-                    sortKey = 'capitalGain';
-                    break;
-                case 'multiple':
-                    sortKey = 'multiple';
-                    break;
+            if (nationality === 'singaporean' || nationality === 'others') {
+                consultantLtvWrapper.style.display = 'none';
+                if (loanEligibility > 3000000) { recommendation = { text: "Recommended Pairing (LTV 80%):", properties: ['Dimm', 'Riri', 'Meridin'], type: 'and' }; }
+                else if (loanEligibility > 2000000) { recommendation = { text: "Recommended Choice (LTV 80%):", special: true, properties: ['Weizia', 'Dimm', 'Meridin'] }; }
+                else if (loanEligibility > 1500000) { recommendation = { text: "Recommended Property (LTV 70%):", properties: ['Abby'], type: 'single' }; }
+                else if (loanEligibility > 1000000) { recommendation = { text: "Recommended Choice (LTV 80%):", properties: ['Riri', 'Weizia', 'Ferra'], type: 'or' }; }
+                else { recommendation.text = "Increase loan eligibility for specific recommendations."; }
+            } else if (nationality === 'malaysian') {
+                consultantLtvWrapper.style.display = 'block';
+                const ltv = document.querySelector('input[name="consultantLtv"]:checked').value;
+                if (loanEligibility > 2000000) {
+                    if (ltv === '90') { recommendation = { text: "Recommended Pairing (LTV 90%):", properties: ['Weizia', 'Riri', 'Soya A'], type: 'and' }; } 
+                    else { recommendation = { text: "Recommended Pairing (LTV 70%):", properties: ['Dimm', 'Soya A'], type: 'and' }; }
+                } else if (loanEligibility > 1000000) {
+                    if (ltv === '90') { recommendation = { text: "Recommended Choice (LTV 90%):", special: true, properties: ['Weizia', 'Riri', 'Meridin'] }; } 
+                    else { recommendation = { text: "Recommended Property (LTV 70%):", properties: ['Dimm'], type: 'single' }; }
+                } else if (loanEligibility > 800000) {
+                    if (ltv === '90') { recommendation = { text: "Recommended Property (LTV 90%):", properties: ['Ferra'], type: 'single' }; } 
+                    else { recommendation = { text: "Recommended Choice (LTV 70%):", properties: ['Soya A', 'Pinna'], type: 'or' }; }
+                } else if (loanEligibility > 500000) {
+                    if (ltv === '90') { recommendation = { text: "Recommended Choice (LTV 90%):", properties: ['Una', 'Nexa', 'Sora'], type: 'or' }; } 
+                    else { recommendation = { text: "Recommended Choice (LTV 70%):", properties: ['Soya A', 'Lara'], type: 'or' }; }
+                } else if (loanEligibility > 400000) {
+                    if (ltv === '90') { recommendation = { text: "Recommended Choice (LTV 90%):", properties: ['Yuna', 'Eva'], type: 'or' }; }
+                     else { recommendation = { text: "Recommended Choice (LTV 70%):", properties: ['Soya A', 'Lara'], type: 'or' }; }
+                } else {
+                    recommendation = { text: "Recommendation:", properties:[], textOnly: "Talk to your consultant how to increase LE"};
+                }
             }
-            
-            sortedProperties.sort((a, b) => (b[sortKey] || 0) - (a[sortKey] || 0));
-
-            displayResults(sortedProperties.slice(0, 5), ltv, priority, specificGoal);
+            displayConsultantRecommendation(recommendation);
         }
 
-        function displayResults(properties, ltv, priority, specificGoal) {
-            const resultsContainer = document.getElementById('results-container');
-            if (properties.length === 0) {
-                resultsContainer.innerHTML = '<div class="advice"><h3>No properties match your selected income band.</h3><p>Consider selecting a higher income band or adjusting your criteria.</p></div>';
+        function displayConsultantRecommendation(recommendation) {
+            consultantRecommendationResult.innerHTML = '';
+            
+            if(recommendation.textOnly) {
+                consultantRecommendationResult.innerHTML = `<div class="mt-4 p-4 bg-yellow-100 rounded-lg text-center"><p class="text-xl font-semibold text-red-800">${recommendation.textOnly}</p></div>`;
+                pairingSpotlight.classList.add('hidden');
                 return;
             }
 
-            const priorityText = document.querySelector(`#property-priority option[value=${priority}]`).textContent;
+            let content = `<h4 class="text-lg font-semibold text-gray-800 inline-block p-2 rounded-md bg-green-100 text-green-800 font-bold">${recommendation.text}</h4>`;
+            
+            const getPropSpan = (propName) => {
+                const propData = propertyData.find(p => p.name.toUpperCase() === propName.toUpperCase());
+                const color = propData ? 'text-red-700 font-bold' : 'text-gray-800 font-bold';
+                return `<span class="text-2xl ${color} p-2 bg-red-50 rounded-md">${propName}</span>`;
+            };
 
-            let adviceHTML = `
-                <div class="advice">
-                    <h3>Your Personalized Recommendation</h3>
-                    <p>Based on your goal to "<b>${specificGoal}</b>" and your priority for <b>${priorityText}</b>, here are your top property matches, ranked by the <b>${ltv}% LTV</b> scenario.</p>
-                </div>
-            `;
+            if (recommendation.properties.length > 0) {
+                let propertyLinks;
+                if (recommendation.special) {
+                    // Handle special cases like Weizia or (Dimm and Meridin) or (Weizia or Riri and Meridin)
+                    let operator = (recommendation.properties.includes('Riri') && recommendation.properties.includes('Meridin')) ? '&' : 'OR';
+                     propertyLinks = `
+                        ${getPropSpan(recommendation.properties[0])}
+                        <span class="mx-2 sm:mx-4 text-gray-500 font-bold text-xl">OR</span>
+                        <span class="flex items-center gap-2">
+                           (${getPropSpan(recommendation.properties[1])}
+                           <span class="text-gray-500 font-bold text-2xl">${operator}</span>
+                           ${getPropSpan(recommendation.properties[2])})
+                        </span>
+                    `;
+                } else {
+                    let separator = '';
+                    if (recommendation.type === 'and') separator = `<span class="mx-2 sm:mx-4 text-gray-500 font-bold text-2xl">&</span>`;
+                    else if (recommendation.type === 'or') separator = `<span class="mx-2 sm:mx-4 text-gray-500 font-bold text-xl">OR</span>`;
+                    propertyLinks = recommendation.properties.map(getPropSpan).join(separator);
+                }
+                content += `<div class="mt-4 p-4 bg-yellow-100 rounded-lg flex items-center justify-center flex-wrap gap-y-2">${propertyLinks}</div>`;
+            }
+            consultantRecommendationResult.innerHTML = content;
 
-            let tableHTML = `
-                <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Project Name</th>
-                            <th>Status</th>
-                            <th>Cashflow (90%)</th>
-                            <th>Cashflow (70%)</th>
-                            <th>Cashback (90%)</th>
-                            <th>Cashback (70%)</th>
-                            <th>Capital Gain</th>
-                            <th>Band</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            properties.forEach(prop => {
-                tableHTML += `
-                    <tr>
-                        <td class="highlight">${prop.name}</td>
-                        <td>${prop.status}</td>
-                        <td>${(prop.cashflow90 || 0).toLocaleString()}</td>
-                        <td>${(prop.cashflow70 || 0).toLocaleString()}</td>
-                        <td>${(prop.cashback90 || 0).toLocaleString()}</td>
-                        <td>${(prop.cashback70 || 0).toLocaleString()}</td>
-                        <td>${prop.capitalGain !== null ? prop.capitalGain + '%' : 'N/A'}</td>
-                        <td>${prop.band}</td>
-                    </tr>
-                `;
-            });
-
-            tableHTML += '</tbody></table></div>';
-            resultsContainer.innerHTML = adviceHTML + tableHTML;
+            // Show or hide the pairing spotlight
+            if (recommendation.type === 'and' || recommendation.special) {
+                pairingSpotlight.classList.remove('hidden');
+            } else {
+                pairingSpotlight.classList.add('hidden');
+            }
         }
         
-        window.onload = updateGoalRecommendations;
+        function populateArpProjects() {
+            arpProjectSelect.innerHTML = '<option value="" disabled selected>Select a Project</option>';
+            const arpProperties = propertyData.filter(p => p.arp || (p.nettPrice && p.nettPrice > 0));
+            arpProperties.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.name;
+                option.textContent = p.name;
+                arpProjectSelect.appendChild(option);
+            });
+        }
 
+        function calculateARP() {
+            const selectedProjectName = arpProjectSelect.value;
+            if (!selectedProjectName) return;
+
+            const project = propertyData.find(p => p.name === selectedProjectName);
+            const formatMYR = (num) => `RM ${num.toLocaleString('en-US', { maximumFractionDigits: 0 })}/m`;
+            const arpT1Label = document.getElementById('arpT1Label');
+
+            // Reset labels to default first
+            arpM40Label.textContent = 'M40 Package (3% Yield):';
+            arpT20Label.textContent = 'T20 Package (4% Yield):';
+            arpT1Label.textContent = 'T1 Package (6% Yield):';
+
+            if (project.arpType === 'fixed') {
+                const fixedRentalText = project.fixedRental ? `${formatMYR(project.fixedRental)} (Fixed)` : 'N/A (Fixed)';
+                // Special logic for fixed rental projects to only show for T1, unless otherwise specified
+                if (['FERRA', 'ANA', 'WEIZIA'].includes(project.name)) {
+                     arpM40Display.textContent = 'N/A';
+                     arpT20Display.textContent = 'N/A';
+                     arpT1Display.textContent = fixedRentalText;
+                     arpT1Label.textContent = 'T1 Package:';
+                } else {
+                     // Fallback for other fixed rental types if any
+                     arpM40Display.textContent = fixedRentalText;
+                     arpT20Display.textContent = fixedRentalText;
+                     arpT1Display.textContent = fixedRentalText;
+                }
+            } else { // Assumes 'percentage'
+                 const price = project.nettPrice || 0;
+                 if (price === 0) {
+                     const notApplicable = 'N/A';
+                     arpM40Display.textContent = notApplicable;
+                     arpT20Display.textContent = notApplicable;
+                     arpT1Display.textContent = notApplicable;
+                     return;
+                 }
+                const m40_yield = (price * 0.03) / 12;
+                const t20_yield = (price * 0.04) / 12;
+                let t1_yield;
+
+                if (project.name === 'VIANA') {
+                    t1_yield = (price * 0.07) / 12;
+                    arpT1Label.textContent = 'T1 Package (7% Yield):';
+                } else {
+                    t1_yield = (price * 0.06) / 12;
+                }
+
+                arpM40Display.textContent = formatMYR(m40_yield);
+                arpT20Display.textContent = formatMYR(t20_yield);
+                arpT1Display.textContent = formatMYR(t1_yield);
+            }
+        }
+
+        // --- EVENT LISTENERS ---
+        ageSlider.addEventListener('input', (e) => { ageValue.textContent = e.target.value; updateFocusArea(e.target.value); });
+        portfolioSelector.addEventListener('change', updateVision);
+        loanEligibilityInput.addEventListener('input', recommendProperties);
+        document.querySelectorAll('input[name="finderLtv"]').forEach(radio => {
+            radio.addEventListener('change', recommendProperties);
+        });
+        
+        // New Mortgage Listeners
+        clientAgeInput.addEventListener('input', recommendProperties);
+        interestRateInput.addEventListener('input', recommendProperties);
+        loanTenureInput.addEventListener('input', recommendProperties);
+
+        // Consultant Recommender Listeners
+        nationalitySelector.addEventListener('change', consultantRecommend);
+        consultantLoanEligibilitySlider.addEventListener('input', (e) => { consultantLoanEligibilityValue.textContent = parseInt(e.target.value).toLocaleString('en-US'); consultantRecommend(); });
+        consultantLtvSelector.addEventListener('change', consultantRecommend);
+        
+        // ARP Calculator Listener
+        arpProjectSelect.addEventListener('change', calculateARP);
+
+        // --- INITIALIZATION ---
+        createTimeline();
+        updateFocusArea(ageSlider.value);
+        updateVision();
+        recommendProperties();
+        consultantRecommend();
+        populateArpProjects();
+    });
     </script>
 </body>
 </html>
