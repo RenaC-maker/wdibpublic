@@ -94,10 +94,115 @@
             padding: 0.2rem 0.6rem;
             border-radius: 0.25rem;
             font-weight: 700;
-            background-color: #2563eb; /* Changed to a distinct blue */
+            background-color: #2563eb; /* Distinct blue */
             color: white;
             margin-left: 8px;
         }
+
+        /* New ARP Calculator Styles */
+        .arp-calc-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .arp-header {
+            color: #dc2626; /* Red-600 for header */
+            font-weight: 800;
+            font-size: 1.875rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .arp-package-card {
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .arp-package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .arp-package-card.t1 {
+            border-color: #3b82f6; /* Blue-500 */
+        }
+        .arp-package-card.t1 .pkg-title {
+            color: #1e40af; /* Blue-800 */
+        }
+        .arp-package-card.ecf {
+            border-color: #3b82f6; /* Blue-500 */
+        }
+        .arp-package-card.ecf .pkg-title {
+             color: #1e40af; /* Blue-800 */
+        }
+
+        .pkg-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .pkg-subtitle {
+            font-size: 0.875rem;
+            color: #6b7280; /* Gray-500 */
+            margin-bottom: 1.5rem;
+        }
+        .pkg-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4b5563; /* Gray-600 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        .pkg-value {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #0284c7; /* Sky-700 (Blueish) */
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+        .pkg-gain-value {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: #16a34a; /* Green-600 */
+        }
+        .pkg-divider {
+            border-top: 1px solid #e5e7eb;
+            margin: 1.5rem 0;
+        }
+        .ecf-perks-section {
+            background-color: #f0f9ff; /* Lightest blue */
+            border: 1px solid #bfdbfe; /* Lighter blue border */
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 2rem;
+        }
+        .ecf-perks-section h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: bold;
+            color: #1e3a8a; /* Dark blue */
+            margin-bottom: 16px;
+        }
+        .ecf-perks-section ul {
+            list-style: disc;
+            padding-left: 20px;
+            color: #2d3748; /* gray-800 */
+        }
+        .ecf-perks-section ul li {
+            margin-bottom: 10px;
+        }
+        .ecf-perks-section strong {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+        .cashflow-positive {
+            color: #16a34a; /* Green-600 */
+        }
+        .cashflow-negative {
+            color: #dc2626; /* Red-600 */
+        }
+
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
@@ -264,7 +369,7 @@
             <div class="mt-8"><h3 class="text-xl font-bold text-gray-800 mb-4">Recommended Properties:</h3><div id="propertyRecommendations" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
         </div>
         
-        <!-- UPDATED ARP & Mortgage Calculator Section -->
+        <!-- NEW ARP & Mortgage Calculator Section -->
         <div class="arp-calc-container mt-8">
             <h2 class="arp-header">ARP & Mortgage Calculator</h2>
 
@@ -301,7 +406,7 @@
                 <div class="arp-package m40 bg-gray-50 border border-gray-300">
                     <p class="pkg-name">M40 Package</p>
                     <p class="pkg-yield">3%</p>
-                    <p class="text-sm text-gray-500 mb-4">Annual Yield</p>
+                    <p class="text-sm text-gray-500 mb-4 pkg-subtitle">Based on a nett price of RM 0</p>
                     <div class="pkg-divider"></div>
                     <p class="pkg-label">PROJECTED MONTHLY RETURN</p>
                     <p id="m40MonthlyReturn" class="pkg-monthly">RM 0 /m</p>
@@ -316,7 +421,7 @@
                 <div class="arp-package t20 bg-orange-50 border border-orange-200">
                     <p class="pkg-name">T20 Package</p>
                     <p class="pkg-yield">4%</p>
-                    <p class="text-sm text-orange-700 mb-4">Annual Yield</p>
+                    <p class="text-sm text-orange-700 mb-4 pkg-subtitle">Based on a nett price of RM 0</p>
                     <div class="pkg-divider"></div>
                     <p class="pkg-label">PROJECTED MONTHLY RETURN</p>
                     <p id="t20MonthlyReturn" class="pkg-monthly text-orange-900">RM 0 /m</p>
@@ -331,7 +436,7 @@
                 <div class="arp-package t1 bg-green-50 border border-green-300">
                     <p class="pkg-name">T1 Package</p>
                     <p class="pkg-yield">6%</p>
-                    <p class="text-sm text-green-700 mb-4">Annual Yield</p>
+                    <p class="text-sm text-green-700 mb-4 pkg-subtitle">Based on a nett price of RM 0</p>
                     <div class="pkg-divider"></div>
                     <p class="pkg-label">PROJECTED MONTHLY RETURN</p>
                     <p id="t1MonthlyReturn" class="pkg-monthly text-green-900">RM 0 /m</p>
@@ -347,7 +452,7 @@
                     <div class="bg-blue-500 text-white text-xs font-bold uppercase py-1 px-3 rounded-full inline-block mb-2">Best Value</div>
                     <p class="pkg-name text-blue-900">ECF Member</p>
                     <p class="pkg-yield text-blue-700">7%</p>
-                    <p class="text-sm text-blue-700 mb-4">Annual Yield</p>
+                    <p class="text-sm text-blue-700 mb-4 pkg-subtitle">Based on a nett price of RM 0</p>
                     <div class="pkg-divider"></div>
                     <p class="pkg-label">PROJECTED MONTHLY RETURN</p>
                     <p id="ecfMonthlyReturn" class="pkg-monthly text-blue-900">RM 0 /m</p>
@@ -475,7 +580,7 @@
             { name: 'VIANA', loanRange: [800000, 1000000], cashflow90: 2000, cashflow70: 1200, cashback90: 300000, cashback70: -10000, capitalGain: 30, gradeCapital: 'B', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 970000, arpType: 'percentage' },
             { name: 'DIMM', loanRange: [800000, 1000000], cashflow90: 350, cashflow70: 1500, cashback90: 210000, cashback70: -70000, capitalGain: 25, gradeCapital: 'B', gradeCashflow: 'A', status: 'Completed', arp: true, nettPrice: 1050638, arpType: 'percentage' }
         ];
-        
+
         // NEW data for the ARP & Mortgage Calculator, from the FIRE EVENT PDFs
         const arpProjectData = [
             { name: 'Ana, Johor', nettPrice: 361000 },
@@ -749,6 +854,7 @@
         }
         
         // --- NEW ARP CALCULATOR FUNCTIONS ---
+        // New data source from FIRE EVENT PDFs
         const newArpProjectData = [
             { name: 'Ana, Johor', nettPrice: 361000 },
             { name: 'Tessa, Puchong', nettPrice: 340747 },
@@ -789,10 +895,12 @@
 
             // Set Nett Price Display
             arpNettPrice.textContent = formatPrice(price);
-            document.getElementById('t1NettPrice').textContent = formatPrice(price);
-            document.getElementById('ecfNettPrice').textContent = formatPrice(price);
+            
+            // Update subtitles in cards
             document.getElementById('m40MonthlyReturn').closest('.arp-package').querySelector('.pkg-subtitle').textContent = `Based on a nett price of ${formatPrice(price)}`;
             document.getElementById('t20MonthlyReturn').closest('.arp-package').querySelector('.pkg-subtitle').textContent = `Based on a nett price of ${formatPrice(price)}`;
+            document.getElementById('t1MonthlyReturn').closest('.arp-package').querySelector('.pkg-subtitle').textContent = `Based on a nett price of ${formatPrice(price)}`;
+            document.getElementById('ecfMonthlyReturn').closest('.arp-package').querySelector('.pkg-subtitle').textContent = `Based on a nett price of ${formatPrice(price)}`;
 
 
             // Mortgage & Rebate Calculation
@@ -832,13 +940,11 @@
             t1MonthlyReturn.textContent = formatMYR(t1MonthlyVal);
             t1AnnualReturn.textContent = formatMYR(t1MonthlyVal * 12, false);
             t1CashflowGain.textContent = formatGain(t1Gain);
-            t1CashflowGain.className = 'pkg-gain-value cashflow-positive';
 
             // ECF
             ecfMonthlyReturn.textContent = formatMYR(ecfMonthlyVal);
             ecfAnnualReturn.textContent = formatMYR(ecfMonthlyVal * 12, false);
             ecfCashflowGain.textContent = formatGain(ecfGain);
-            ecfCashflowGain.className = 'pkg-gain-value cashflow-positive';
         }
 
         // --- EVENT LISTENERS ---
