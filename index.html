@@ -1018,7 +1018,7 @@
             ecfBasisEl.textContent = `Based on a nett price of ${formatPrice(price)}`;
 
             // Mortgage & Rebate Calculation
-            const loanAmount = price * 0.9; // 100% LTV
+            const loanAmount = price * 1.0; // 100% LTV
             const monthlyInst = calculateMonthlyInstallment(loanAmount, 3.7, 35);
             monthlyMortgageEl.textContent = formatMYR(monthlyInst);
             
